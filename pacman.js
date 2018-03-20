@@ -1,6 +1,6 @@
 // Setup initial game stats
 var score = 0;
-var lives = 2;
+var lives = 4;
 var powerPellet = 4;
 
 
@@ -58,14 +58,14 @@ function displayStats() {
   console.log('Score: ' + score + '     Lives: ' + lives + '     Power-Pellets: ' + powerPellet);
 }
 
-function displayMenu() {
+function displayMenu(eatGhost) {
   console.log('\n\nSelect Option:\n');  // each \n creates a new line
   console.log('(d) Eat Dot');
   console.log('(p) Eat Power-Pellet');
-  console.log('(1) Eat Inky');
-  console.log('(2) Eat Blinky');
-  console.log('(3) Eat Pinky');
-  console.log('(4) Eat Clyde');
+  console.log('(1) Eat Inky' + ' ' + '(' + edibleStatus (inky) +')');
+  console.log('(2) Eat Blinky' + ' ' + '(' + edibleStatus(blinky) +')');
+  console.log('(3) Eat Pinky' + ' ' + '(' + edibleStatus(pinky) +')');
+  console.log('(4) Eat Clyde' + ' ' + '(' + edibleStatus(clyde) +')');
   console.log('(q) Quit');
 }
 
@@ -79,6 +79,16 @@ function displayPrompt() {
 function eatDot() {
   console.log('\nChomp!');
   score += 10;
+}
+
+function edibleStatus(ghost) {
+  // return ghost.edible
+  if (ghost.edible === true) {
+    return 'edible'
+  }
+  else {
+    return 'inedible'
+  }
 }
 
 function eatPowerPellet() {
@@ -95,9 +105,16 @@ function eatPowerPellet() {
 }
 
 function eatGhost(ghost) {
-  console.log('\nYou have been killed by ' + ghost.name + ' ' + ghost.colour + '!');
-  lives -= 1;
-  gameOver(lives);
+  if (ghost.edible === true) {
+    ghost.edible = false;
+    console.log('\nYou have eaten ' + ghost.name + ' ' + ghost.character + '!');
+    score += 200;
+  }
+  else {
+    console.log('\nYou have been killed by ' + ghost.name + ' ' + ghost.colour + '!');
+    lives -= 1;
+    gameOver(lives);
+  }
 }
 
 function gameOver(lives) {
@@ -155,7 +172,7 @@ drawScreen();
 stdin.on('data', function(key) {
   process.stdout.write(key);
   processInput(key);
-  setTimeout(drawScreen, 300); // The command prompt will flash a message for 300 milliseoncds before it re-draws the screen. You can adjust the 300 number to increase this.
+  setTimeout(drawScreen, 1000); // The command prompt will flash a message for 300 milliseoncds before it re-draws the screen. You can adjust the 300 number to increase this.
 });
 
 // Player Quits
