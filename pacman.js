@@ -36,7 +36,7 @@ var clyde = {
   edible: false
 };
 
-// replace this comment with your four ghosts setup as objects
+var ghosts = [ inky, blinky, pinky, clyde ];
 
 
 // Draw the screen functionality
@@ -60,6 +60,10 @@ function displayStats() {
 function displayMenu() {
   console.log('\n\nSelect Option:\n');  // each \n creates a new line
   console.log('(d) Eat Dot');
+  console.log('(1) Eat Inky');
+  console.log('(2) Eat Blinky');
+  console.log('(3) Eat Pinky');
+  console.log('(4) Eat Clyde');
   console.log('(q) Quit');
 }
 
@@ -75,6 +79,10 @@ function eatDot() {
   score += 10;
 }
 
+function eatGhost(ghost) {
+  console.log('\nYou have been killed by ' + ghost.name + ' ' + ghost.colour + '!');
+  lives -= 1;
+}
 
 // Process Player's Input
 function processInput(key) {
@@ -85,6 +93,18 @@ function processInput(key) {
       break;
     case 'd':
       eatDot();
+      break;
+    case '1':
+      eatGhost(ghosts[0]);
+      break;
+    case '2':
+      eatGhost(ghosts[1]);
+      break;
+    case '3':
+      eatGhost(ghosts[2]);
+      break;
+    case '4':
+      eatGhost(ghosts[3]);
       break;
     default:
       console.log('\nInvalid Command!');
