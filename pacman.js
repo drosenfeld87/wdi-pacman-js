@@ -82,7 +82,9 @@ function eatDot() {
 function eatGhost(ghost) {
   console.log('\nYou have been killed by ' + ghost.name + ' ' + ghost.colour + '!');
   lives -= 1;
+  gameOver(lives);
 }
+
 
 // Process Player's Input
 function processInput(key) {
@@ -111,7 +113,11 @@ function processInput(key) {
   }
 }
 
-
+function gameOver(lives) {
+  if (lives < 1) {
+    process.exit();
+  }
+}
 //
 // YOU PROBABLY DON'T WANT TO CHANGE CODE BELOW THIS LINE
 //
