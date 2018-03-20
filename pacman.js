@@ -61,6 +61,7 @@ function displayStats() {
 function displayMenu() {
   console.log('\n\nSelect Option:\n');  // each \n creates a new line
   console.log('(d) Eat Dot');
+  console.log('(p) Eat Power-Pellet');
   console.log('(1) Eat Inky');
   console.log('(2) Eat Blinky');
   console.log('(3) Eat Pinky');
@@ -80,10 +81,29 @@ function eatDot() {
   score += 10;
 }
 
+function eatPowerPellet() {
+  if (powerPellet < 1) {
+    console.log('\nNo Power-Pellets left!');}
+  else {
+    score += 50;
+    ghosts[0].edible = true;
+    ghosts[1].edible = true;
+    ghosts[2].edible = true;
+    ghosts[3].edible = true;
+    powerPellet -= 1;
+  }
+}
+
 function eatGhost(ghost) {
   console.log('\nYou have been killed by ' + ghost.name + ' ' + ghost.colour + '!');
   lives -= 1;
   gameOver(lives);
+}
+
+function gameOver(lives) {
+  if (lives < 1) {
+    process.exit();
+  }
 }
 
 
@@ -97,6 +117,9 @@ function processInput(key) {
     case 'd':
       eatDot();
       break;
+      case 'p':
+        eatPowerPellet();
+        break;
     case '1':
       eatGhost(ghosts[0]);
       break;
@@ -114,11 +137,7 @@ function processInput(key) {
   }
 }
 
-function gameOver(lives) {
-  if (lives < 1) {
-    process.exit();
-  }
-}
+
 //
 // YOU PROBABLY DON'T WANT TO CHANGE CODE BELOW THIS LINE
 //
